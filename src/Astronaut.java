@@ -46,11 +46,11 @@ public class Astronaut {
             dy = -dy;
 
         }
-        if (xpos > 1000) { //bounce off right  wall
+        if (xpos > 1000-width) { //bounce off right  wall
             dx = -dx;
 
         }
-        if (ypos > 610) { //bounce off bottom wall
+        if (ypos > 700-height) { //bounce off bottom wall
             dy = -dy;
 
         }
