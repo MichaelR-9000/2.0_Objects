@@ -35,15 +35,20 @@ public class BasicGameApp implements Runnable {
    //Declare the variables needed for the graphics
 	public JFrame frame;
 	public Canvas canvas;
-   public JPanel panel;
+    public JPanel panel;
    
 	public BufferStrategy bufferStrategy;
 	public Image astroPic;
+    public Image asteroidPic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
 	private Astronaut astro;
     public Astronaut astro2;
+
+    public Asteroid asteroid1;
+
+
 
 
    // Main method definition
@@ -68,27 +73,45 @@ public class BasicGameApp implements Runnable {
 
         int randx = (int)(Math.random() * 10);
         int randx2 = (int)(Math.random() * 10);
+        int randx3 = (int)(Math.random() * 10);
         int randy = (int)(Math.random() *700)+1;
         int randy2 = (int)(Math.random() *700)+1;
+        int randy3 = (int)(Math.random() * 10);
+
 
 
 
         //range to 1-10
         randx = (int)(Math.random() * 10)+ 1;
 
-        randx = (int)(Math.random() * 1000)+ 1;
-        randx2 = (int)(Math.random() * 1000)+ 1;
-        randy = (int)(Math.random() *700)+1;
-        randy2 = (int)(Math.random() *700)+1;
+        randx = (int)(Math.random() * 900)+ 1;
+        randx2 = (int)(Math.random() * 900)+ 1;
+        randx3 = (int)(Math.random() * 900)+ 1;
+        randy = (int)(Math.random() *600)+1;
+        randy2 = (int)(Math.random() *600)+1;
+        randy3 = (int)(Math.random() *600)+1;
 
       //variable and objects
       //create (construct) the objects needed for the game and load up 
-		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
+		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png");
+        asteroidPic = Toolkit.getDefaultToolkit().getImage("asteroid.png");//load the picture
 		astro = new Astronaut(randx,randy);
         astro2 = new Astronaut(randx2,randy2);
-        astro2.dx = -4;
-        astro2.dy = -4;
+        astro2.dx = -5;
+        astro2.dy = -5;
         astro2.width = 90;
+
+        asteroid1 = new Asteroid(randx3,randy3);
+        asteroid1.dx = -20;
+        asteroid1.dy = -5;
+
+        /*if (asteroid1.xpos == astro2.xpos){
+            astro2.xpos = 20;
+        }
+        if (asteroid1.ypos == astro2.ypos){
+            astro2.ypos = 20;
+        }*/
+
 
 
 	}// BasicGameApp()
@@ -118,6 +141,8 @@ public class BasicGameApp implements Runnable {
       //calls the move( ) code in the objects
 		astro.move();
         astro2.move();
+
+        asteroid1.move();
 
 	}
 	
@@ -170,6 +195,8 @@ public class BasicGameApp implements Runnable {
       //draw the image of the astronaut
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
         g.drawImage(astroPic, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
+
+        g.drawImage(asteroidPic, asteroid1.xpos, asteroid1.ypos, asteroid1.width, asteroid1.height, null);
 
 
 		g.dispose();
