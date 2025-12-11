@@ -47,6 +47,7 @@ public class BasicGameApp implements Runnable {
     public Astronaut astro2;
 
     public Asteroid asteroid1;
+    public Asteroid asteroid2;
 
 
 
@@ -104,6 +105,9 @@ public class BasicGameApp implements Runnable {
         asteroid1 = new Asteroid(randx3,randy3);
         asteroid1.dx = -20;
         asteroid1.dy = -5;
+        asteroid2 = new Asteroid(randx3,randy3);
+        asteroid2.dx = -30;
+        asteroid2.dy = -5;
 
         /*if (asteroid1.xpos == astro2.xpos){
             astro2.xpos = 20;
@@ -143,6 +147,7 @@ public class BasicGameApp implements Runnable {
         astro2.move();
 
         asteroid1.move();
+        asteroid2.move();
 
 	}
 	
@@ -197,6 +202,7 @@ public class BasicGameApp implements Runnable {
         g.drawImage(astroPic, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
 
         g.drawImage(asteroidPic, asteroid1.xpos, asteroid1.ypos, asteroid1.width, asteroid1.height, null);
+        g.drawImage(asteroidPic, asteroid2.xpos, asteroid2.ypos, asteroid2.width, asteroid2.height, null);
 
 
 		g.dispose();
