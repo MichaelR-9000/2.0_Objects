@@ -75,9 +75,11 @@ public class BasicGameApp implements Runnable {
         int randx = (int)(Math.random() * 10);
         int randx2 = (int)(Math.random() * 10);
         int randx3 = (int)(Math.random() * 10);
+        int randx4 = (int)(Math.random() * 10);
         int randy = (int)(Math.random() *700)+1;
         int randy2 = (int)(Math.random() *700)+1;
         int randy3 = (int)(Math.random() * 10);
+        int randy4 = (int)(Math.random() * 10);
 
 
 
@@ -88,9 +90,11 @@ public class BasicGameApp implements Runnable {
         randx = (int)(Math.random() * 900)+ 1;
         randx2 = (int)(Math.random() * 900)+ 1;
         randx3 = (int)(Math.random() * 900)+ 1;
+        randx4 = (int)(Math.random() * 900)+1;
         randy = (int)(Math.random() *600)+1;
         randy2 = (int)(Math.random() *600)+1;
         randy3 = (int)(Math.random() *600)+1;
+        randy4 = (int)(Math.random() * 600)+1;
 
       //variable and objects
       //create (construct) the objects needed for the game and load up 
@@ -104,8 +108,8 @@ public class BasicGameApp implements Runnable {
 
         asteroid1 = new Asteroid(randx3,randy3);
         asteroid1.dx = -20;
-        asteroid1.dy = -5;
-        asteroid2 = new Asteroid(randx3,randy3);
+        asteroid1.dy = -10;
+        asteroid2 = new Asteroid(randx4,randy4);
         asteroid2.dx = -30;
         asteroid2.dy = -5;
 
@@ -160,6 +164,17 @@ public class BasicGameApp implements Runnable {
             astro.dy = -astro.dy;
             astro2.dx = -astro2.dx;
             astro2.dy = -astro2.dy;
+
+
+
+        }
+        if (asteroid1.hitbox.intersects(asteroid2.hitbox)){
+
+            asteroid1.dx = -asteroid1.dx;
+            asteroid1.dy = -asteroid1.dy;
+            asteroid2.dx = -asteroid2.dx;
+            asteroid2.dy = -asteroid2.dy;
+
         }
     }
 	
