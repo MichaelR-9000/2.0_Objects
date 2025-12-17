@@ -39,6 +39,7 @@ public class BasicGameApp implements Runnable {
    
 	public BufferStrategy bufferStrategy;
 	public Image astroPic;
+    public Image Background;
     public Image asteroidPic;
 
    //Declare the objects used in the program
@@ -99,7 +100,8 @@ public class BasicGameApp implements Runnable {
       //variable and objects
       //create (construct) the objects needed for the game and load up 
 		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png");
-        asteroidPic = Toolkit.getDefaultToolkit().getImage("asteroid.png");//load the picture
+        asteroidPic = Toolkit.getDefaultToolkit().getImage("asteroid.png");
+        Background = Toolkit.getDefaultToolkit().getImage("Background.png");//load the picture
 		astro = new Astronaut(randx,randy);
         astro2 = new Astronaut(randx2,randy2);
         astro2.dx = -5;
@@ -165,15 +167,15 @@ public class BasicGameApp implements Runnable {
             astro2.dx = -astro2.dx;
             astro2.dy = -astro2.dy;
 
+        }
+        if (asteroid1.hitbox.intersects(asteroid2.hitbox)&& asteroid2.isCrashing == false){
+            System.out.println("asteroid Collision");
+            asteroid2.height = asteroid2.height+10;
 
 
         }
-        if (asteroid1.hitbox.intersects(asteroid2.hitbox)){
-
-            asteroid1.dx = -asteroid1.dx;
-            asteroid1.dy = -asteroid1.dy;
-            asteroid2.dx = -asteroid2.dx;
-            asteroid2.dy = -asteroid2.dy;
+        if(!asteroid1.hitbox.intersects(asteroid2.hitbox)){
+            asteroid2.isCrashing = false;
 
         }
     }
@@ -226,6 +228,7 @@ public class BasicGameApp implements Runnable {
 
       //draw the image of the astronaut
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
+        g.drawImage(Background, 0, 0, WIDTH, HEIGHT, null);
 
         if(astro2.isAlive == true) {
             g.drawImage(astroPic, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);

@@ -11,6 +11,7 @@ public class Asteroid {
     public int height;
     public boolean isAlive;//a boolean to denote if the hero is alive or dead.
     public Rectangle hitbox;
+    public boolean isCrashing;
 
     public Asteroid(int pXpos, int pYpos) {
         xpos = pXpos;
