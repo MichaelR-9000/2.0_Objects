@@ -168,14 +168,14 @@ public class BasicGameApp implements Runnable {
             astro2.dy = -astro2.dy;
 
         }
-        if (asteroid1.hitbox.intersects(asteroid2.hitbox)&& asteroid2.isCrashing == false){
+        if (asteroid1.hitbox.intersects(asteroid2.hitbox)&& asteroid2.isCrashing == true){
             System.out.println("asteroid Collision");
-            asteroid2.height = asteroid2.height+10;
+            asteroid2.isCrashing = false;
 
 
         }
         if(!asteroid1.hitbox.intersects(asteroid2.hitbox)){
-            asteroid2.isCrashing = false;
+            asteroid2.isCrashing = true;
 
         }
     }
