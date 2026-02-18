@@ -13,6 +13,8 @@
 
 //Graphics Libraries
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
@@ -21,97 +23,93 @@ import javax.swing.JPanel;
 
 //*******************************************************************************
 // Class Definition Section
+//step 1: implement key listener
+public class BasicGameApp implements Runnable, KeyListener {
 
-public class BasicGameApp implements Runnable {
+    //Variable Definition Section
+    //Declare the variables used in the program
+    //You can set their initial values too
 
-   //Variable Definition Section
-   //Declare the variables used in the program 
-   //You can set their initial values too
-   
-   //Sets the width and height of the program window
-	final int WIDTH = 1000;
-	final int HEIGHT = 700;
+    //Sets the width and height of the program window
+    final int WIDTH = 1000;
+    final int HEIGHT = 700;
 
-   //Declare the variables needed for the graphics
-	public JFrame frame;
-	public Canvas canvas;
+    //Declare the variables needed for the graphics
+    public JFrame frame;
+    public Canvas canvas;
     public JPanel panel;
-   
-	public BufferStrategy bufferStrategy;
-	public Image astroPic;
+
+    public BufferStrategy bufferStrategy;
+    public Image astroPic;
     public Image Background;
     public Image asteroidPic;
 
-   //Declare the objects used in the program
-   //These are things that are made up of more than one variable type
-	private Astronaut astro;
+    //Declare the objects used in the program
+    //These are things that are made up of more than one variable type
+    private Astronaut astro;
     public Astronaut astro2;
 
     public Asteroid asteroid1;
     public Asteroid asteroid2;
 
 
+    // Main method definition
+    // This is the code that runs first and automatically
+    public static void main(String[] args) {
+        BasicGameApp ex = new BasicGameApp();   //creates a new instance of the game
+        new Thread(ex).start();                 //creates a threads & starts up the code in the run( ) method
+    }
 
 
-   // Main method definition
-   // This is the code that runs first and automatically
-	public static void main(String[] args) {
-		BasicGameApp ex = new BasicGameApp();   //creates a new instance of the game
-		new Thread(ex).start();                 //creates a threads & starts up the code in the run( ) method
-	}
+    // Constructor Method
+    // This has the same name as the class
+    // This section is the setup portion of the program
+    // Initialize your variables and construct your program objects here.
+    public BasicGameApp() {
 
+        setUpGraphics();
 
-   // Constructor Method
-   // This has the same name as the class
-   // This section is the setup portion of the program
-   // Initialize your variables and construct your program objects here.
-	public BasicGameApp() {
-      
-      setUpGraphics();
-
-      //randomness
+        //randomness
         //(int)(math.random()* range) + offset
         //range 0-9
 
-        int randx = (int)(Math.random() * 10);
-        int randx2 = (int)(Math.random() * 10);
-        int randx3 = (int)(Math.random() * 10);
-        int randx4 = (int)(Math.random() * 10);
-        int randy = (int)(Math.random() *700)+1;
-        int randy2 = (int)(Math.random() *700)+1;
-        int randy3 = (int)(Math.random() * 10);
-        int randy4 = (int)(Math.random() * 10);
-
-
+        int randx = (int) (Math.random() * 10);
+        int randx2 = (int) (Math.random() * 10);
+        int randx3 = (int) (Math.random() * 10);
+        int randx4 = (int) (Math.random() * 10);
+        int randy = (int) (Math.random() * 700) + 1;
+        int randy2 = (int) (Math.random() * 700) + 1;
+        int randy3 = (int) (Math.random() * 10);
+        int randy4 = (int) (Math.random() * 10);
 
 
         //range to 1-10
-        randx = (int)(Math.random() * 10)+ 1;
+        randx = (int) (Math.random() * 10) + 1;
 
-        randx = (int)(Math.random() * 900)+ 1;
-        randx2 = (int)(Math.random() * 900)+ 1;
-        randx3 = (int)(Math.random() * 900)+ 1;
-        randx4 = (int)(Math.random() * 900)+1;
-        randy = (int)(Math.random() *600)+1;
-        randy2 = (int)(Math.random() *600)+1;
-        randy3 = (int)(Math.random() *600)+1;
-        randy4 = (int)(Math.random() * 600)+1;
+        randx = (int) (Math.random() * 900) + 1;
+        randx2 = (int) (Math.random() * 900) + 1;
+        randx3 = (int) (Math.random() * 900) + 1;
+        randx4 = (int) (Math.random() * 900) + 1;
+        randy = (int) (Math.random() * 600) + 1;
+        randy2 = (int) (Math.random() * 600) + 1;
+        randy3 = (int) (Math.random() * 600) + 1;
+        randy4 = (int) (Math.random() * 600) + 1;
 
-      //variable and objects
-      //create (construct) the objects needed for the game and load up 
-		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png");
+        //variable and objects
+        //create (construct) the objects needed for the game and load up
+        astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png");
         asteroidPic = Toolkit.getDefaultToolkit().getImage("asteroid.png");
         Background = Toolkit.getDefaultToolkit().getImage("Background.png");//load the picture
-		astro = new Astronaut(randx,randy);
-        astro2 = new Astronaut(randx2,randy2);
+        astro = new Astronaut(randx, randy);
+        astro2 = new Astronaut(randx2, randy2);
         astro2.dx = -5;
         astro2.dy = -5;
         astro2.width = 90;
 
-        asteroid1 = new Asteroid(randx3,randy3);
+        asteroid1 = new Asteroid(randx3, randy3);
         asteroid1.dx = -20;
         asteroid1.dy = -10;
-        asteroid2 = new Asteroid(randx4,randy4);
+        asteroid2 = new Asteroid(randx4, randy4);
         asteroid2.dx = -30;
         asteroid2.dy = -5;
 
@@ -123,44 +121,43 @@ public class BasicGameApp implements Runnable {
         }*/
 
 
+    }// BasicGameApp()
 
-	}// BasicGameApp()
 
-   
 //*******************************************************************************
 //User Method Section
 //
 // put your code to do things here.
 
-   // main thread
-   // this is the code that plays the game after you set things up
-	public void run() {
+    // main thread
+    // this is the code that plays the game after you set things up
+    public void run() {
 
-      //for the moment we will loop things forever.
-		while (true) {
+        //for the moment we will loop things forever.
+        while (true) {
 
-         moveThings();  //move all the game objects
-         render();  // paint the graphics
-         pause(20); // sleep for 10 ms
-		}
-	}
+            moveThings();  //move all the game objects
+            render();  // paint the graphics
+            pause(20); // sleep for 10 ms
+        }
+    }
 
 
-	public void moveThings()
-	{
-      //calls the move( ) code in the objects
-		astro.move();
+    public void moveThings() {
+        //calls the move( ) code in the objects
+        astro.move();
         astro2.move();
 
         asteroid1.move();
         asteroid2.move();
-    crashing();
+        crashing();
 
-	}
-    public void crashing(){
+    }
+
+    public void crashing() {
 
         //if astros crash into eachother
-        if(astro.hitbox.intersects(astro2.hitbox)){
+        if (astro.hitbox.intersects(astro2.hitbox)) {
             System.out.println("CRASH!!!");
             astro.dx = -astro.dx;
             astro.dy = -astro.dy;
@@ -168,79 +165,144 @@ public class BasicGameApp implements Runnable {
             astro2.dy = -astro2.dy;
 
         }
-        if (asteroid1.hitbox.intersects(asteroid2.hitbox)&& asteroid2.isCrashing == true){
+        if (asteroid1.hitbox.intersects(asteroid2.hitbox) && asteroid2.isCrashing == false) {
             System.out.println("asteroid Collision");
-            asteroid2.isCrashing = false;
+            asteroid2.isCrashing = true;
 
 
         }
-        if(!asteroid1.hitbox.intersects(asteroid2.hitbox)){
-            asteroid2.isCrashing = true;
+        if (!asteroid1.hitbox.intersects(asteroid2.hitbox)) {
+            asteroid2.isCrashing = false;
 
         }
     }
-	
-   //Pauses or sleeps the computer for the amount specified in milliseconds
-   public void pause(int time ){
-   		//sleep
-			try {
-				Thread.sleep(time);
-			} catch (InterruptedException e) {
 
-			}
-   }
+    //Pauses or sleeps the computer for the amount specified in milliseconds
+    public void pause(int time) {
+        //sleep
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
 
-   //Graphics setup method
-   private void setUpGraphics() {
-      frame = new JFrame("Application Template");   //Create the program window or frame.  Names it.
-   
-      panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
-      panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
-      panel.setLayout(null);   //set the layout
-   
-      // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
-      // and trap input events (Mouse and Keyboard events)
-      canvas = new Canvas();  
-      canvas.setBounds(0, 0, WIDTH, HEIGHT);
-      canvas.setIgnoreRepaint(true);
-   
-      panel.add(canvas);  // adds the canvas to the panel.
-   
-      // frame operations
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //makes the frame close and exit nicely
-      frame.pack();  //adjusts the frame and its contents so the sizes are at their default or larger
-      frame.setResizable(false);   //makes it so the frame cannot be resized
-      frame.setVisible(true);      //IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!
-      
-      // sets up things so the screen displays images nicely.
-      canvas.createBufferStrategy(2);
-      bufferStrategy = canvas.getBufferStrategy();
-      canvas.requestFocus();
-      System.out.println("DONE graphic setup");
-   
-   }
+        }
+    }
+
+    //Graphics setup method
+    private void setUpGraphics() {
+        frame = new JFrame("Application Template");   //Create the program window or frame.  Names it.
+
+        panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
+        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
+        panel.setLayout(null);   //set the layout
+
+        // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
+        // and trap input events (Mouse and Keyboard events)
+        canvas = new Canvas();
+
+        //step 2: add key listener to canvas
+        canvas.addKeyListener(this);
+
+        canvas.setBounds(0, 0, WIDTH, HEIGHT);
+        canvas.setIgnoreRepaint(true);
+
+        panel.add(canvas);  // adds the canvas to the panel.
+
+        // frame operations
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //makes the frame close and exit nicely
+        frame.pack();  //adjusts the frame and its contents so the sizes are at their default or larger
+        frame.setResizable(false);   //makes it so the frame cannot be resized
+        frame.setVisible(true);      //IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!
+
+        // sets up things so the screen displays images nicely.
+        canvas.createBufferStrategy(2);
+        bufferStrategy = canvas.getBufferStrategy();
+        canvas.requestFocus();
+        System.out.println("DONE graphic setup");
+
+    }
 
 
-	//paints things on the screen using bufferStrategy
-	private void render() {
-		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
-		g.clearRect(0, 0, WIDTH, HEIGHT);
-
-      //draw the image of the astronaut
-		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
+    //paints things on the screen using bufferStrategy
+    private void render() {
+        Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
+        g.clearRect(0, 0, WIDTH, HEIGHT);
         g.drawImage(Background, 0, 0, WIDTH, HEIGHT, null);
 
-        if(astro2.isAlive == true) {
+        //draw the image of the astronaut
+        g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
+
+
+        if (astro2.isAlive == true) {
             g.drawImage(astroPic, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
         }
 
         g.drawImage(asteroidPic, asteroid1.xpos, asteroid1.ypos, asteroid1.width, asteroid1.height, null);
         g.drawImage(asteroidPic, asteroid2.xpos, asteroid2.ypos, asteroid2.width, asteroid2.height, null);
-        g.drawRect(astro.hitbox.x,astro.hitbox.y,astro.hitbox.width,astro.hitbox.height);
+        //g.drawRect(astro.hitbox.x,astro.hitbox.y,astro.hitbox.width,astro.hitbox.height);
 
 
-		g.dispose();
+        g.dispose();
 
-		bufferStrategy.show();
-	}
+        bufferStrategy.show();
+    }
+    //step 3: add methods
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+        System.out.println(e.getKeyCode());
+
+        if (e.getKeyCode() == 87) {
+            System.out.println("going up");
+            astro.isNorth = true;
+        }
+        if (e.getKeyCode() == 83) {
+            System.out.println("going down");
+            astro.isSouth = true;
+        }
+
+
+        if (e.getKeyCode() == 68) {
+            System.out.println("going east");
+            astro.isEast = true;
+        }
+        if (e.getKeyCode() == 65) {
+            System.out.println("going west");
+            astro.isWest = true;
+        }
+
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) { // Stop character movement
+        System.out.println(e.getKeyCode());
+
+        if (e.getKeyCode() == 87) {
+            System.out.println("not going up");
+            astro.isNorth = false;
+        }
+        if (e.getKeyCode() == 83) {
+            System.out.println("not going down");
+            astro.isSouth = false;
+        }
+        if (e.getKeyCode() == 68) {
+            System.out.println("not going east");
+            astro.isEast = false;
+        }
+        if (e.getKeyCode() == 65) {
+            System.out.println("not going west");
+            astro.isWest = false;
+        }
+
+
+    }
+
+
+
 }
