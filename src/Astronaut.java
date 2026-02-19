@@ -51,21 +51,21 @@ public class Astronaut {
     public void move() {
 
         if(isNorth == true){
-            dy = -5;
+            dy = -10;
         }
         if(isNorth == false && isSouth == false){
             dy = 0;
         }
         if(isSouth == true){
-            dy = 5;
+            dy = 10;
         }
 
 
         if(isEast == true){
-            dx = 5;
+            dx = 10;
         }
         if(isWest == true){
-            dx = -5;
+            dx = -10;
         }
         if(isEast == false && isWest == false){
             dx = 0;
