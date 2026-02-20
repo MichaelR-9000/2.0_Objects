@@ -12,19 +12,24 @@
 //import java.awt.Canvas;
 
 //Graphics Libraries
+import org.w3c.dom.css.Rect;
+
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.xml.transform.Source;
 
 
 //*******************************************************************************
 // Class Definition Section
 //step 1: implement key listener
-public class BasicGameApp implements Runnable, KeyListener {
+public class BasicGameApp implements Runnable, KeyListener, MouseListener {
 
     //Variable Definition Section
     //Declare the variables used in the program
@@ -51,6 +56,9 @@ public class BasicGameApp implements Runnable, KeyListener {
 
     public Asteroid asteroid1;
     public Asteroid asteroid2;
+
+    public Rectangle Starthitbox;
+    public boolean startgame;
 
 
     // Main method definition
@@ -120,6 +128,7 @@ public class BasicGameApp implements Runnable, KeyListener {
             astro2.ypos = 20;
         }*/
 
+        Starthitbox = new Rectangle(100,100,100,100);
 
     }// BasicGameApp()
 
@@ -145,12 +154,13 @@ public class BasicGameApp implements Runnable, KeyListener {
 
     public void moveThings() {
         //calls the move( ) code in the objects
-        astro.move();
-        astro2.move();
-
-        asteroid1.move();
-        asteroid2.move();
-        crashing();
+        if (startgame == true) {
+            astro.move();
+            astro2.move();
+            asteroid1.move();
+            asteroid2.move();
+            crashing();
+        }
 
     }
 
@@ -201,6 +211,8 @@ public class BasicGameApp implements Runnable, KeyListener {
 
         //step 2: add key listener to canvas
         canvas.addKeyListener(this);
+        // add mouse motion to canvas
+        canvas.addMouseListener(this);
 
         canvas.setBounds(0, 0, WIDTH, HEIGHT);
         canvas.setIgnoreRepaint(true);
@@ -226,18 +238,23 @@ public class BasicGameApp implements Runnable, KeyListener {
     private void render() {
         Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
         g.clearRect(0, 0, WIDTH, HEIGHT);
-        g.drawImage(Background, 0, 0, WIDTH, HEIGHT, null);
+        if (startgame == true) {
+            g.drawImage(Background, 0, 0, WIDTH, HEIGHT, null);
 
-        //draw the image of the astronaut
-        g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
+            //draw the image of the astronaut
+            g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
 
 
-        if (astro2.isAlive == true) {
-            g.drawImage(astroPic, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
+            //if (astro2.isAlive == true) {
+                //g.drawImage(astroPic, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
+            //w}
+
+            g.drawImage(asteroidPic, asteroid1.xpos, asteroid1.ypos, asteroid1.width, asteroid1.height, null);
+            g.drawImage(asteroidPic, asteroid2.xpos, asteroid2.ypos, asteroid2.width, asteroid2.height, null);
         }
 
-        g.drawImage(asteroidPic, asteroid1.xpos, asteroid1.ypos, asteroid1.width, asteroid1.height, null);
-        g.drawImage(asteroidPic, asteroid2.xpos, asteroid2.ypos, asteroid2.width, asteroid2.height, null);
+        g.setColor(Color.green);
+        g.fillRect(100,100,100,100);
         //g.drawRect(astro.hitbox.x,astro.hitbox.y,astro.hitbox.width,astro.hitbox.height);
 
 
@@ -300,9 +317,38 @@ public class BasicGameApp implements Runnable, KeyListener {
             astro.isWest = false;
         }
 
-
     }
 
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println(e.getPoint());
+        Rectangle pointHitbox = new Rectangle(e.getX(), e.getY(), 1,1);
+        if (Starthitbox.intersects(pointHitbox)){
+            startgame = true;
+            System.out.println("start game");
+        }
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        System.out.println("mouse entered the screen");
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
