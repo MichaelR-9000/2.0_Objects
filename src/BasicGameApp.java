@@ -331,7 +331,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         Rectangle pointHitbox = new Rectangle(e.getX(), e.getY(), 1,1);
         if (Starthitbox.intersects(pointHitbox)){
             startgame = true;
-            System.out.println("start game!");
+            System.out.println("start game!!!");
         }
 
     }
