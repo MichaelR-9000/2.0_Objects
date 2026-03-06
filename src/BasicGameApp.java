@@ -59,6 +59,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
 
     public Rectangle Starthitbox;
     public boolean startgame;
+    public Asteroid[] asteroids;
 
 
     // Main method definition
@@ -121,6 +122,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         asteroid2.dx = -30;
         asteroid2.dy = -5;
 
+
         /*if (asteroid1.xpos == astro2.xpos){
             astro2.xpos = 20;
         }
@@ -129,6 +131,15 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         }*/
 
         Starthitbox = new Rectangle(100,100,100,100);
+        startgame = false;
+
+        asteroids = new Asteroid[5];
+
+        for(int i = 0; i< asteroids.length; i++){
+            asteroids[i] = new Asteroid(200, (int)(Math.random()*700));
+        }
+
+
 
     }// BasicGameApp()
 
@@ -159,6 +170,10 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
             astro2.move();
             asteroid1.move();
             asteroid2.move();
+            for (int o = 0; o < asteroids.length; o++){
+                asteroids[o].move();
+            }
+
             crashing();
         }
 
@@ -251,7 +266,13 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
 
             g.drawImage(asteroidPic, asteroid1.xpos, asteroid1.ypos, asteroid1.width, asteroid1.height, null);
             g.drawImage(asteroidPic, asteroid2.xpos, asteroid2.ypos, asteroid2.width, asteroid2.height, null);
-        }
+for(int b=0; b<asteroids.length;b++) {
+    g.drawImage(asteroidPic, asteroids[b].xpos, asteroids[b].ypos, asteroids[b].width, asteroids[b].height, null);
+}
+}
+
+
+
 
         g.setColor(Color.green);
         g.fillRect(100,100,100,100);
@@ -333,6 +354,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
             startgame = true;
             System.out.println("start game!!!");
         }
+
 
     }
 
