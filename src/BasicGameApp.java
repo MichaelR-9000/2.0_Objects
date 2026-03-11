@@ -133,7 +133,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         Starthitbox = new Rectangle(100,100,100,100);
         startgame = false;
 
-        asteroids = new Asteroid[5];
+        asteroids = new Asteroid[6];
 
         for(int i = 0; i< asteroids.length; i++){
             asteroids[i] = new Asteroid(200, (int)(Math.random()*700));
